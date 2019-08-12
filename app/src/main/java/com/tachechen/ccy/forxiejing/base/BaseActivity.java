@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -23,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         unbinder = ButterKnife.bind(this);
 
         registerActivityLifecycleCallbacks();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -58,6 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         if(activityLifecycleCallbacks != null)
             BaseApp.getInstance().unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
+        EventBus.getDefault().unregister(this);
     }
 
     private void registerActivityLifecycleCallbacks(){
